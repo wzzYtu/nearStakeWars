@@ -16,6 +16,9 @@ NEAR validator is an important guarantee to ensure the safe operation of the net
 - After creating a unique Account ID, a set of 12-word mnemonics will be generated, which need to be stored properly. Owning the mnemonic is equivalent to using it for all near tokens in the account;
 - In order to ensure that the user has saved the mnemonic, the web wallet will randomly check the nth mnemonic;
 - Finally, enter the mnemonic, and you can successfully create a wallet. Note that the wallet address created on this page is for testing, and the near in this address is only for testing and has no actual value;
+
+![avatar](../picture/walletCreate.png)
+
 - The process of creating a wallet on the main network is different from that in the test network. In the main network, a small amount of NEAR Token needs to be sent to the newly created wallet to activate the wallet. Other content is basically the same as the test network method, which can be used for reference.
 
 ## 2. Create a validator
@@ -134,6 +137,8 @@ WantedBy=multi-user.target
 near call factory.shardnet.near create_staking_pool '{"staking_pool_id": "<pool id>", "owner_id": "<accountId>", "stake_public_key": "<public key>", "reward_fee_fraction": {"numerator" : 5, "denominator": 100}, "code_hash":"DD428g9eqLL8fWUxv8QSpVFzyHi1Qd16P8ephYCTmMSZ"}' --accountId="<accountId>" --amount=30 --gas=300000000000000
 ````
 
+![avatar](../picture/StakingPool.png)
+
 - make a mortgage
 ```bash
 near call <staking_pool_id> deposit_and_stake --amount <amount> --accountId <accountId> --gas=300000000000000
@@ -165,10 +170,15 @@ sudo apt install curl jq
 curl -s http://127.0.0.1:3030/status | jq .version
 ````
 
+![avatar](../picture/nearVersion.png)
+
 - Check Delegators and Stake Command:
 ```bash
 near view <your pool>.factory.shardnet.near get_accounts '{"from_index": 0, "limit": 10}' --accountId <accountId>.shardnet.near
 ````
+
+![avatar](../picture/checkStake.png)
+
 
 - Check Reason Validator Kicked Command:
 ```bash
@@ -179,3 +189,5 @@ curl -s -d '{"jsonrpc": "2.0", "method": "validators", "id": "dontcare", "params
 ```bash
 curl -s -d '{"jsonrpc": "2.0", "method": "validators", "id": "dontcare", "params": [null]}' -H 'Content-Type: application/json ' 127.0.0.1:3030 | jq -c '.result.current_validators[] | select(.account_id | contains ("POOL_ID"))'
 ````
+
+![avatar](../picture/createBlock.png)
